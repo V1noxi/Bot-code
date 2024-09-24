@@ -1,0 +1,36 @@
+import telebot
+from telebot import types
+
+bot = telebot.TeleBot('8139098876:AAFN9lcZ5n4Edwibp4caHb-Qz5JJeHX2czI')
+
+@bot.message_handler(commands=['start'])
+def start(message):
+
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    btn1 = types.KeyboardButton("прайс")
+    markup.add(btn1)
+    bot.send_message(message.from_user.id, "здравстувйте, это бот дизайнера @V1noxi", reply_markup=markup)
+
+@bot.message_handler(content_types=['text'])
+def get_text_messages(message):
+
+    if message.text == 'прайс':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True) #создание новых кнопок
+        btn1 = types.KeyboardButton('хард')
+        btn2 = types.KeyboardButton('медиум')
+        btn3 = types.KeyboardButton('лайт')
+        markup.add(btn1, btn2, btn3)
+        bot.send_message(message.from_user.id, 'выберите аватарку которую хотите купить!', reply_markup=markup) #ответ бота
+
+
+    elif message.text == 'хард':
+        bot.send_message(message.from_user.id, 'цена 1$, время работы 1-2 часа, оплата крипто бот', parse_mode='Markdown')
+
+    elif message.text == 'медиум':
+        bot.send_message(message.from_user.id, 'цена 0.75$, время работы 30мин-1час, оплата крипто бот', parse_mode='Markdown')
+
+    elif message.text == 'лайт':
+        bot.send_message(message.from_user.id, 'цена 0.5$, время работы 15-30мин оплата крипто бот', parse_mode='Markdown')
+
+
+bot.polling(none_stop=True, interval=0) #обязательная для работы бота часть
